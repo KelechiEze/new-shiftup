@@ -1,0 +1,160 @@
+import React, { useLayoutEffect, useRef } from 'react';
+import { ChevronRight, ExternalLink, Calendar, Clock } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const blogPosts = [
+  {
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop",
+    date: "November 15, 2025",
+    readTime: "5 min read",
+    title: "How We're Solving Africa's Tech Talent Gap",
+    excerpt: "After training over 15,000 students across Africa, we realized something important: The gap isn't just about skills. It's about trust, structure, and support."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop",
+    date: "November 14, 2025",
+    readTime: "3 min read",
+    title: "Empowering 2,000 Women to Lead Africa's Tech Revolution",
+    excerpt: "This stems from a barrier to innovation, economic growth, and the full realization of Africa's digital potential."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+    date: "November 13, 2025",
+    readTime: "4 min read",
+    title: "I Almost Gave Up on Tech Before I Started",
+    excerpt: "Most training programs teach you to code. Top Universe teaches you to become a builder."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop",
+    date: "November 13, 2025",
+    readTime: "2 min read",
+    title: "The Day I Stopped Fighting With ChatGPT",
+    excerpt: "I'd type something vague like \"make a login system,\" and it would spit out code that was either completely wrong or way too complicated. Sound familiar?"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop",
+    date: "April 10, 2025",
+    readTime: "1 min read",
+    title: "🚀 Get Ready for Cohort 5.0",
+    excerpt: "We're thrilled to announce that Cohort 5.0 at Top Universe is officially launching this June 2025! 🎉 After the incredible success of our previous cohorts..."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop",
+    date: "March 23, 2025",
+    readTime: "1 min read",
+    title: "Hearty Cheers To Our Beneficiaries!",
+    excerpt: "🎉 Congratulations to the incredible community members of Top Universe! 🚀 I want to extend a heartfelt thank you to all of you who have just successfully completed the Cohort 3.0 Batch B training."
+  }
+];
+
+const BlogSection: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Using fromTo with autoAlpha ensures elements are strictly hidden/shown
+      // autoAlpha handles both opacity and visibility CSS property
+      gsap.fromTo(".blog-card", 
+        { 
+          y: 60, 
+          autoAlpha: 0 
+        },
+        {
+          scrollTrigger: {
+            trigger: ".blog-grid-container", // Trigger based on the container
+            start: "top 85%", // Trigger slightly earlier
+          },
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power2.out",
+          clearProps: "transform,opacity,visibility" // Ensure they stay visible after animation
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} className="bg-[#F9F9F9] py-20 px-6 md:px-12 w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col items-start mb-12">
+          <h2 className="text-3xl md:text-5xl font-medium text-brand-black mb-4 tracking-tight">
+            Latest from our blog
+          </h2>
+          <p className="text-gray-500 text-sm md:text-base max-w-2xl font-light">
+            Stay updated with insights, tutorials, and stories from the Top Universe community.
+          </p>
+        </div>
+
+        {/* 
+            Layout Update:
+            Mobile: Flex container, horizontal scroll (overflow-x-auto), snap scrolling, hidden scrollbars.
+            Desktop: Standard Grid.
+        */}
+        <div className="blog-grid-container flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] mb-12 md:mb-16">
+          {blogPosts.map((post, idx) => (
+            <div key={idx} className="blog-card min-w-[85vw] md:min-w-0 snap-center flex flex-col bg-white rounded-sm overflow-hidden hover:shadow-xl transition-all duration-300 group shadow-sm border border-gray-100 h-auto">
+              {/* Image Container */}
+              <div className="relative w-full h-52 overflow-hidden bg-gray-200 flex-shrink-0">
+                <img 
+                  src={post.image} 
+                  alt={post.title} 
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-grow">
+                {/* Meta Data */}
+                <div className="flex items-center gap-4 text-xs text-gray-400 mb-3 font-medium">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar size={12} />
+                    <span>{post.date}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Clock size={12} />
+                    <span>{post.readTime}</span>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-brand-black mb-3 leading-snug group-hover:text-brand-gold transition-colors duration-200">
+                  {post.title}
+                </h3>
+
+                {/* Excerpt */}
+                <p className="text-gray-500 text-xs leading-relaxed mb-6 line-clamp-3 flex-grow">
+                  {post.excerpt}
+                </p>
+
+                {/* Read More Link */}
+                <div className="flex items-center text-xs font-bold text-brand-black group-hover:translate-x-1 transition-transform duration-200 cursor-pointer mt-auto">
+                  Read more <ChevronRight size={14} className="ml-1" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Button */}
+        <div className="flex justify-center">
+            <button className="bg-brand-yellow text-brand-black px-8 py-3 rounded-full text-sm font-bold hover:bg-brand-gold transition-colors flex items-center gap-2 shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 uppercase tracking-widest">
+                Read More Articles
+                <ExternalLink size={14} />
+            </button>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default BlogSection;
