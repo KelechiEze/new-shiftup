@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
@@ -5,7 +6,7 @@ import Logo from './Logo';
 import { PageType } from '../App';
 
 interface NavbarProps {
-  onNavigate?: (page: PageType) => void;
+  onNavigate?: (page: PageType, sectionId?: string) => void;
   currentPage: PageType;
 }
 
@@ -14,11 +15,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const isBlogPage = currentPage === 'blog';
+
   const navLinks = [
     { name: 'HOME', id: 'home', hasDropdown: false },
     { name: 'WHY SHIFTUP', id: 'why-shiftup', hasDropdown: true },
     { name: 'PARTNER', id: 'partner', hasDropdown: true },
-    { name: 'PROGRAMME', id: 'programme', hasDropdown: true },
+    { name: 'PROGRAM', id: 'programme', hasDropdown: true },
   ];
 
   useEffect(() => {
@@ -53,9 +56,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-6 md:px-12 flex items-center justify-between ${
-      isScrolled ? 'bg-brand-black/90 backdrop-blur-lg py-4 shadow-2xl border-b border-white/10' : 'bg-transparent'
+      (isScrolled || isBlogPage) ? 'bg-brand-black/95 backdrop-blur-lg py-4 shadow-2xl border-b border-white/10' : 'bg-transparent'
     }`}>
-      {/* Logo - Left Aligned */}
+      {/* Logo */}
       <div 
         onClick={(e) => handleNavigation('home', e)} 
         className="cursor-pointer text-white relative z-50"
@@ -63,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
         <Logo />
       </div>
 
-      {/* Desktop Navigation - Centered */}
+      {/* Desktop Navigation */}
       <div className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
         {navLinks.map((link) => (
           <a

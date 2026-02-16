@@ -1,5 +1,6 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { User, MessageSquareText, HandCoins, ChevronRight } from 'lucide-react';
+
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { User, MessageSquareText, HandCoins, ChevronRight, ChevronUp } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -25,6 +26,7 @@ const partnerTypes = [
 
 const PartnerSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -80,12 +82,23 @@ const PartnerSection: React.FC = () => {
 
           {/* Right: Description & Button */}
           <div className="partner-header-anim flex flex-col items-start md:items-end gap-8 max-w-md pt-4">
-            <p className="text-gray-400 text-base md:text-lg leading-relaxed md:text-right font-light">
-              Shift Up Africa is dedicated to empowering Young African Graduates with the mindset, tools, and access to succeed.
-            </p>
-            <button className="group px-8 py-3 rounded-full bg-brand-yellow text-brand-black text-sm font-bold hover:bg-brand-gold transition-all duration-300 flex items-center gap-2 shadow-lg uppercase tracking-wider">
-              View more 
-              <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <div className={`text-gray-400 text-base md:text-lg leading-relaxed md:text-right font-light overflow-hidden transition-all duration-500 ${isExpanded ? 'max-h-[1000px]' : 'max-h-[80px]'}`}>
+              <p className="mb-4">
+                Shift Up Africa is dedicated to empowering Young African Graduates with the mindset, tools, and access to succeed.
+              </p>
+              {isExpanded && (
+                <div className="space-y-4">
+                  <p>Our network comprises global industry veterans, forward-thinking organizations, and educational visionaries who believe in the potential of Africa's youth.</p>
+                  <p>By partnering with us, you join a movement that prioritizes measurable impact over empty rhetoric, ensuring every graduate we touch becomes a world-class contributor.</p>
+                </div>
+              )}
+            </div>
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group px-8 py-3 rounded-full bg-brand-yellow text-brand-black text-sm font-bold hover:bg-brand-gold transition-all duration-300 flex items-center gap-2 shadow-lg uppercase tracking-wider"
+            >
+              {isExpanded ? 'View less' : 'View more'} 
+              {isExpanded ? <ChevronUp size={16} /> : <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />}
             </button>
           </div>
         </div>

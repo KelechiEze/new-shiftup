@@ -32,7 +32,7 @@ const programs = [
     tag: "COMMUNICATION MASTERY",
     subtitle: "Communicate with clarity. Present with confidence.",
     description: "Master the art of storytelling and public speaking. Influence with ease and lead teams through powerful, clear communication and presence.",
-    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1475721027767-4d536da81a46?q=80&w=1200&auto=format&fit=crop",
     features: ["Public Speaking", "Persuasive Storytelling", "Presence & Poise"]
   }
 ];

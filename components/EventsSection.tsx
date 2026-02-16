@@ -29,7 +29,7 @@ const EventsSection: React.FC = () => {
   const events = [
     {
       title: "Community Cleanup Day Events",
-      img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2400&auto=format&fit=crop"
+      img: "https://images.unsplash.com/photo-1594498257602-32638e982f9e?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Food Drive For The Homeless",

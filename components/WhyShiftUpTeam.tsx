@@ -86,7 +86,7 @@ const WhyShiftUpTeam: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-24 px-6 md:px-12 w-full relative overflow-hidden">
+    <section id="team-section" ref={sectionRef} className="bg-white py-24 px-6 md:px-12 w-full relative overflow-hidden scroll-mt-24">
       
       {/* Decorative Blocks - Top Right */}
       <div className="absolute top-0 right-0 hidden md:grid grid-cols-3 gap-0 z-10 opacity-80">

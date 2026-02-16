@@ -1,3 +1,4 @@
+
 import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { ArrowRight, Play, X } from 'lucide-react';
 import gsap from 'gsap';
@@ -101,9 +102,11 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isVideoOpen]);
 
-  // Function to open video modal
-  const openVideo = () => {
-    setIsVideoOpen(true);
+  const scrollToEvents = () => {
+    const element = document.getElementById('events');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -149,7 +152,10 @@ const Hero: React.FC = () => {
             <button className="hero-btn-anim w-full sm:w-auto bg-brand-yellow hover:bg-brand-gold text-brand-black px-14 h-[64px] rounded-full font-bold tracking-widest text-sm transition-all shadow-2xl hover:-translate-y-1 active:scale-95 uppercase">
               OUR HELP
             </button>
-            <button className="hero-btn-anim group flex items-center gap-4 text-xs font-bold tracking-[0.25em] text-white hover:text-brand-yellow transition-colors uppercase">
+            <button 
+              onClick={scrollToEvents}
+              className="hero-btn-anim group flex items-center gap-4 text-xs font-bold tracking-[0.25em] text-white hover:text-brand-yellow transition-colors uppercase"
+            >
               SEE EVENTS
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-3" />
             </button>
@@ -158,10 +164,9 @@ const Hero: React.FC = () => {
 
         {/* Play Button - Iconic Yellow Circle */}
         <div className="lg:col-span-4 flex justify-center lg:justify-end items-center mt-12 lg:mt-0">
-          <button
-            onClick={openVideo}
-            className="hero-play-anim relative group cursor-pointer focus:outline-none"
-            aria-label="Watch our impact video"
+          <div 
+            onClick={() => setIsVideoOpen(true)}
+            className="hero-play-anim relative group cursor-pointer"
           >
             {/* Pulsing Outer Rings */}
             <div className="absolute inset-0 rounded-full bg-brand-yellow/30 animate-ping"></div>
@@ -176,7 +181,7 @@ const Hero: React.FC = () => {
                   </div>
                </div>
             </div>
-          </button>
+          </div>
         </div>
       </div>
 
@@ -198,9 +203,8 @@ const Hero: React.FC = () => {
           {/* Refined, Small Close Button - Positioned to avoid navbar overlap */}
           <button 
             onClick={closeVideo}
-            className="absolute top-28 right-8 md:top-32 md:right-16 text-white/50 hover:text-white transition-all p-2 rounded-full hover:bg-white/10 z-[110] border border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-yellow"
+            className="absolute top-28 right-8 md:top-32 md:right-16 text-white/50 hover:text-white transition-all p-2 rounded-full hover:bg-white/10 z-[110] border border-white/10"
             title="Close Video"
-            aria-label="Close video"
           >
             <X size={20} className="md:w-5 md:h-5" />
           </button>
@@ -209,22 +213,16 @@ const Hero: React.FC = () => {
           <div className="modal-content relative w-full max-w-5xl aspect-video bg-black rounded-[2.5rem] overflow-hidden shadow-[0_0_150px_rgba(250,204,21,0.2)] border border-white/5 cursor-default">
             <iframe 
               className="w-full h-full"
-              src="https://www.youtube.com/embed/vU8dCYocuyI?autoplay=1&mute=0&rel=0&modestbranding=1&showinfo=0" 
-              title="ShiftUp Africa - Transforming African Youth Leadership"
+              src="https://www.youtube.com/embed/9No-FiE9GTM?autoplay=1&mute=1" 
+              title="ShiftUp Africa Impact Video" 
               frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
             ></iframe>
           </div>
           
           {/* Subtle Branded Glow */}
           <div className="absolute -z-10 w-[50%] h-[50%] bg-brand-yellow/10 rounded-full blur-[180px] pointer-events-none"></div>
-          
-          {/* Video Info Overlay */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center text-white/60 text-sm">
-            Watch our story • 3:24 min
-          </div>
         </div>
       )}
 

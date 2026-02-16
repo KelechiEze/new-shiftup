@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { User, MessageSquareText, HandCoins, ChevronRight } from 'lucide-react';
 import PartnerModal from './PartnerModal';
@@ -12,7 +13,7 @@ const opportunities = [
   {
     icon: MessageSquareText,
     title: "Become a Trainer",
-    color: "bg-[#7C8D5E] text-white", // Keeping the brand green for contrast
+    color: "bg-[#7C8D5E] text-white",
     desc: "Help young Africans master workplace readiness and technical skills through direct instruction."
   },
   {
@@ -34,6 +35,16 @@ const PartnerOpportunities: React.FC = () => {
 
   return (
     <section className="bg-cream py-24 md:py-40 px-6 md:px-12 relative overflow-visible z-10">
+      <style>{`
+        @keyframes subtle-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .animate-subtle-bounce {
+          animation: subtle-bounce 2s infinite ease-in-out;
+        }
+      `}</style>
+      
       <PartnerModal 
         isOpen={!!activeModal} 
         category={activeModal} 
@@ -62,11 +73,9 @@ const PartnerOpportunities: React.FC = () => {
             />
             <div className="absolute inset-0 bg-brand-yellow/10 mix-blend-overlay"></div>
           </div>
-          {/* Decorative Float */}
-          <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-brand-yellow/10 rounded-full blur-3xl -z-10"></div>
         </div>
 
-        {/* Right: The Cards - Always visible now */}
+        {/* Right: The Cards */}
         <div className="flex flex-col gap-6 order-1 lg:order-2 z-20">
           {opportunities.map((item, idx) => (
             <div 
@@ -74,16 +83,6 @@ const PartnerOpportunities: React.FC = () => {
               onClick={() => handleApplyClick(item.title)}
               className={`opp-card group ${item.color} p-8 md:p-10 rounded-[2.5rem] shadow-2xl hover:-translate-x-4 transition-all duration-500 cursor-pointer relative overflow-hidden`}
             >
-              {/* Subtle pattern background for the card */}
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                  <filter id={`noise-${idx}`}>
-                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" />
-                  </filter>
-                  <rect width="100%" height="100%" filter={`url(#noise-${idx})`} />
-                </svg>
-              </div>
-
               <div className="flex items-start justify-between mb-8 relative z-10">
                  <div className={`p-4 rounded-2xl backdrop-blur-md transition-colors duration-500 ${
                    item.title.includes('Mentor') 
@@ -104,7 +103,7 @@ const PartnerOpportunities: React.FC = () => {
                 {item.desc}
               </p>
               
-              <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase relative z-10">
+              <div className="flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase relative z-10 animate-subtle-bounce">
                 <span className="border-b border-current pb-1 opacity-60 group-hover:opacity-100 transition-all">START YOUR JOURNEY</span>
               </div>
             </div>

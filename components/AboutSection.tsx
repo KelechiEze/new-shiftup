@@ -1,11 +1,15 @@
+
 import React, { useLayoutEffect, useRef } from 'react';
 import { Flag, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { PageType } from '../App';
 
-gsap.registerPlugin(ScrollTrigger);
+interface AboutSectionProps {
+  onNavigate?: (page: PageType) => void;
+}
 
-const AboutSection: React.FC = () => {
+const AboutSection: React.FC<AboutSectionProps> = ({ onNavigate }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -114,7 +118,10 @@ const AboutSection: React.FC = () => {
 
           {/* Button */}
           <div className="about-content-text">
-            <button className="bg-brand-yellow hover:bg-brand-gold text-brand-black px-10 h-[56px] rounded-full font-bold tracking-widest text-sm transition-all transform hover:-translate-y-1 shadow-lg uppercase">
+            <button 
+              onClick={() => onNavigate?.('why-shiftup')}
+              className="bg-brand-yellow hover:bg-brand-gold text-brand-black px-10 h-[56px] rounded-full font-bold tracking-widest text-sm transition-all transform hover:-translate-y-1 shadow-lg uppercase"
+            >
               LEARN MORE
             </button>
           </div>

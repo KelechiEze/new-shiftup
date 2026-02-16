@@ -13,10 +13,14 @@ import CTASection from './CTASection';
 import PartnerSection from './PartnerSection';
 import BlogSection from './BlogSection';
 import FAQSection from './FAQSection';
-import GetInTouchSection from './GetInTouchSection';
 import FeaturesOverlay from './FeaturesOverlay';
+import { PageType } from '../App';
 
-const Home: React.FC = () => {
+interface HomeProps {
+  onNavigate?: (page: PageType, sectionId?: string, blogId?: number) => void;
+}
+
+const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   return (
     <>
       {/* Background decoration layer */}
@@ -33,17 +37,18 @@ const Home: React.FC = () => {
       {/* Sections Layer */}
       <div className="relative z-20 mt-12 md:mt-24">
         <ImpactSection />
-        <AboutSection />
-        <CTASection />
+        <AboutSection onNavigate={onNavigate} />
+        <CTASection onNavigate={onNavigate} />
         <TestimonialsSection />
         <OpportunitiesSection />
         <ProgramsSection />
-        <EventsSection />
-        <TeamPreviewSection />
+        <div id="events">
+          <EventsSection />
+        </div>
+        <TeamPreviewSection onNavigate={onNavigate} />
         
         <PartnerSection />
-        <BlogSection />
-        <GetInTouchSection />
+        <BlogSection onNavigate={onNavigate} />
         <FAQSection />
       </div>
     </>

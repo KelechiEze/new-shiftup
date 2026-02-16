@@ -1,6 +1,6 @@
 
-import React, { useLayoutEffect, useRef } from 'react';
-import { ChevronRight } from 'lucide-react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { ChevronRight, ChevronUp } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -12,6 +12,7 @@ interface ProgramsSectionProps {
 
 const ProgramsSection: React.FC<ProgramsSectionProps> = ({ hideHeader = false }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -53,7 +54,7 @@ const ProgramsSection: React.FC<ProgramsSectionProps> = ({ hideHeader = false })
         
         {/* Header Section - Conditionally Rendered */}
         {!hideHeader && (
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-10 mb-12 md:mb-20">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 md:gap-10 mb-12 md:mb-20">
             <div className="prog-header flex flex-col items-start max-w-xl">
               <div className="relative inline-block mb-4">
                 <span className="text-sm font-bold uppercase tracking-widest text-brand-black relative z-10 pb-1">
@@ -67,12 +68,23 @@ const ProgramsSection: React.FC<ProgramsSectionProps> = ({ hideHeader = false })
             </div>
 
             <div className="prog-header flex flex-col items-start gap-6 md:gap-8 max-w-md">
-              <p className="text-gray-500 text-base md:text-lg leading-relaxed text-left font-light">
-                Shift Up Africa empowers young graduates with the mindset, skills, and practical exposure needed to thrive in today’s workplace.
-              </p>
-              <button className="group px-8 py-3 rounded-full border border-gray-400 text-sm font-medium text-brand-black hover:bg-black hover:text-white hover:border-black transition-all duration-300 flex items-center gap-2">
-                View more 
-                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+              <div className={`text-gray-500 text-base md:text-lg leading-relaxed text-left font-light transition-all duration-500 overflow-hidden ${isExpanded ? 'max-h-[1000px]' : 'max-h-[80px]'}`}>
+                <p className="mb-4">
+                  Shift Up Africa empowers young graduates with the mindset, skills, and practical exposure needed to thrive in today’s workplace.
+                </p>
+                {isExpanded && (
+                  <div className="space-y-4">
+                    <p>Our methodology focuses on behavioral competencies that matter most in world-class organizations: execution, curiosity, and high-performance habits.</p>
+                    <p>Through our 100-day sprints, we guide participants from a state of uncertainty to professional clarity and institutional readiness.</p>
+                  </div>
+                )}
+              </div>
+              <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="group px-8 py-3 rounded-full border border-gray-400 text-sm font-medium text-brand-black hover:bg-black hover:text-white hover:border-black transition-all duration-300 flex items-center gap-2"
+              >
+                {isExpanded ? 'View less' : 'View more'}
+                {isExpanded ? <ChevronUp size={16} /> : <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />}
               </button>
             </div>
           </div>
