@@ -1,3 +1,4 @@
+
 import React, { useLayoutEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -41,7 +42,7 @@ const PartnerHero: React.FC = () => {
             </span>
           </div>
           
-          <h1 className="ph-title text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white leading-[1.05] tracking-tight mb-8">
+          <h1 className="ph-title text-3xl md:text-5xl lg:text-[4rem] font-extrabold text-white leading-[1.05] tracking-tight mb-8">
             Transforming Talent <br />
             <span className="text-brand-yellow">Together.</span>
           </h1>

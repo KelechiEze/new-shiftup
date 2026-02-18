@@ -86,7 +86,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onNavigate }) => {
           </div>
 
           {/* Heading */}
-          <h2 className="about-content-text text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1A1A1A] leading-[1.1] mb-8 tracking-tight">
+          <h2 className="about-content-text text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#1A1A1A] leading-[1.1] mb-8 tracking-tight">
             Learn More About Our Mission, Values, And The Impact We've Made.
           </h2>
 

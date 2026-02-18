@@ -88,7 +88,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
                 <span className="bg-brand-yellow/10 px-3 py-1 rounded-full">INSIGHTS</span>
                 <span>{selectedPost.readTime}</span>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-brand-black leading-[1.05] tracking-tighter mb-10">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-black leading-[1.05] tracking-tighter mb-10">
                 {selectedPost.title}
               </h1>
               <div className="flex items-center gap-4 py-8 border-y border-gray-100">
@@ -105,7 +105,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
             </div>
 
             <article className="blog-animate prose prose-lg md:prose-xl max-w-none text-gray-700 font-light leading-relaxed">
-              <p className="text-2xl md:text-3xl text-brand-black font-medium leading-[1.4] mb-12 tracking-tight">
+              <p className="text-xl md:text-2xl text-brand-black font-medium leading-[1.4] mb-12 tracking-tight">
                 {selectedPost.excerpt}
               </p>
               <div className="whitespace-pre-wrap space-y-8 text-lg md:text-xl">
@@ -115,7 +115,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
 
             {/* Related Posts */}
             <div className="mt-32 pt-20 border-t border-gray-100">
-               <h3 className="text-2xl font-extrabold text-brand-black mb-12 tracking-tight">Continue Reading</h3>
+               <h3 className="text-xl font-extrabold text-brand-black mb-12 tracking-tight">Continue Reading</h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {blogPosts.filter(p => p.id !== selectedPost.id).slice(0, 2).map((post) => (
                     <div 
@@ -165,7 +165,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
             <div className="w-12 h-[2px] bg-brand-yellow"></div>
             <span className="text-xs font-extrabold tracking-[0.4em] uppercase text-gray-400">THE SHIFTUP JOURNAL</span>
           </div>
-          <h1 className="text-5xl md:text-8xl font-extrabold text-brand-black tracking-tighter mb-8 leading-[0.9]">
+          <h1 className="text-3xl md:text-6xl font-extrabold text-brand-black tracking-tighter mb-8 leading-[0.9]">
             Insightful <br /> Perspectives.
           </h1>
           <p className="text-gray-500 text-lg md:text-2xl font-light leading-relaxed">
@@ -182,7 +182,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
            <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/20 to-transparent"></div>
            <div className="absolute bottom-0 left-0 p-8 md:p-16 max-w-3xl text-white">
               <span className="text-xs font-bold text-brand-yellow uppercase tracking-[0.3em] mb-4 block">FEATURED ARTICLE</span>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter mb-6 leading-tight group-hover:text-brand-yellow transition-colors">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold tracking-tighter mb-6 leading-tight group-hover:text-brand-yellow transition-colors">
                 {blogPosts[0].title}
               </h2>
               <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-widest opacity-60">
@@ -209,7 +209,7 @@ const BlogPage: React.FC<BlogPageProps> = ({ initialPostId, onNavigate }) => {
                  <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                  <span>{post.readTime}</span>
                </div>
-               <h3 className="text-2xl font-extrabold text-brand-black mb-4 group-hover:text-brand-gold transition-colors leading-tight line-clamp-2">
+               <h3 className="text-xl font-bold text-brand-black mb-4 group-hover:text-brand-gold transition-colors leading-tight line-clamp-2">
                  {post.title}
                </h3>
                <p className="text-gray-500 font-light text-sm leading-relaxed line-clamp-2 mb-6">

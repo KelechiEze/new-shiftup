@@ -62,7 +62,7 @@ const ProgramsSection: React.FC<ProgramsSectionProps> = ({ hideHeader = false })
                 </span>
                 <div className="absolute bottom-0 left-0 w-full h-[3px] bg-brand-yellow z-0"></div>
               </div>
-              <h2 className="text-3xl md:text-5xl lg:text-[3.5rem] font-bold text-brand-black leading-tight tracking-tight">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight tracking-tight">
                 Most Popular <br /> Programs
               </h2>
             </div>

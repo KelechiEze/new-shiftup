@@ -40,7 +40,7 @@ const FAQSection: React.FC = () => {
                 <div className="w-12 h-[2px] bg-brand-yellow"></div>
                 <span className="text-xs font-bold tracking-[0.5em] uppercase text-gray-400">INQUIRIES</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-extrabold text-brand-black leading-tight mb-10 tracking-tighter">
+              <h2 className="text-2xl md:text-4xl font-extrabold text-brand-black leading-tight mb-10 tracking-tighter">
                 Clarity for your <br /> next move.
               </h2>
               <p className="text-gray-500 text-lg font-light leading-relaxed mb-12 max-w-sm">

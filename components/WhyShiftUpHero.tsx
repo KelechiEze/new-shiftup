@@ -44,7 +44,7 @@ const WhyShiftUpHero: React.FC = () => {
 
       {/* Text Content Overlay */}
       <div className="absolute inset-0 flex flex-col justify-end items-center pb-16 md:pb-24 px-6 text-center z-10">
-        <h1 className="why-hero-text text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-4">
+        <h1 className="why-hero-text text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
           Why ShiftUp?
         </h1>
         <p className="why-hero-text text-white/90 text-lg md:text-xl font-light max-w-2xl">

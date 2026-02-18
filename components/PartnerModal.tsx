@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { X, ArrowUpRight, ChevronDown, CheckCircle2 } from 'lucide-react';
 import gsap from 'gsap';
 
 interface PartnerModalProps {
@@ -11,7 +11,8 @@ interface PartnerModalProps {
 
 const PartnerModal: React.FC<PartnerModalProps> = ({ isOpen, onClose, category }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const leftSideRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -21,13 +22,23 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ isOpen, onClose, category }
       const tl = gsap.timeline();
       tl.to(overlayRef.current, { 
         opacity: 1, 
-        duration: 0.3,
+        duration: 0.4,
         display: "block" 
       })
-      .fromTo(contentRef.current, 
-        { y: 60, opacity: 0, scale: 0.98 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power4.out" },
+      .fromTo(modalRef.current, 
+        { y: 100, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power4.out" },
         "-=0.2"
+      )
+      .fromTo(leftSideRef.current, 
+        { x: -50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        "-=0.4"
+      )
+      .fromTo(".form-field-anim", 
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.5, ease: "power2.out" },
+        "-=0.6"
       );
     } else {
       document.body.style.overflow = '';
@@ -37,8 +48,8 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ isOpen, onClose, category }
 
   const handleClose = () => {
     const tl = gsap.timeline({ onComplete: onClose });
-    tl.to(contentRef.current, { y: 60, opacity: 0, scale: 0.98, duration: 0.3, ease: "power4.in" })
-      .to(overlayRef.current, { opacity: 0, duration: 0.2 }, "-=0.1");
+    tl.to(modalRef.current, { y: 100, opacity: 0, scale: 0.9, duration: 0.4, ease: "power4.in" })
+      .to(overlayRef.current, { opacity: 0, duration: 0.3 }, "-=0.2");
   };
 
   if (!isOpen && !category) return null;
@@ -47,136 +58,169 @@ const PartnerModal: React.FC<PartnerModalProps> = ({ isOpen, onClose, category }
   const isSponsorship = category === 'Sponsorship';
 
   return (
-    <div className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-6 ${!isOpen ? 'pointer-events-none' : ''}`}>
-      {/* Overlay */}
+    <div className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 ${!isOpen ? 'pointer-events-none' : ''}`}>
+      {/* Immersive Overlay */}
       <div 
         ref={overlayRef} 
-        className="absolute inset-0 bg-brand-black/95 backdrop-blur-xl opacity-0 hidden"
+        className="absolute inset-0 bg-brand-black/90 backdrop-blur-2xl opacity-0 hidden"
         onClick={handleClose}
       ></div>
       
-      {/* Modal Content - Centered */}
+      {/* Magnificent Split-Screen Modal */}
       <div 
-        ref={contentRef}
-        className="relative w-full max-w-[580px] bg-white rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden max-h-[90vh] flex flex-col opacity-0"
+        ref={modalRef}
+        className="relative w-full max-w-6xl bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_50px_150px_rgba(0,0,0,0.6)] overflow-hidden h-full max-h-[90vh] lg:max-h-[850px] flex flex-col lg:flex-row opacity-0"
       >
-        {/* Header */}
-        <div className="bg-brand-pale/20 px-8 py-8 md:px-12 md:py-10 border-b border-brand-yellow/10 flex justify-between items-start flex-shrink-0 z-20">
-          <div className="pr-8">
-            <h3 className="text-2xl md:text-3xl font-extrabold text-brand-black mb-2 leading-tight">
-              {isSponsorship ? 'Sponsorship Form' : `${category} Application`}
-            </h3>
-            <p className="text-xs md:text-sm text-gray-500 font-light tracking-wide">
-              Join ShiftUp Africa to empower the next generation.
-            </p>
+        {/* LEFT SIDE: Cinematic Brand Experience */}
+        <div ref={leftSideRef} className="hidden lg:flex lg:w-5/12 bg-brand-black relative overflow-hidden p-12 lg:p-16 flex-col justify-between">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={isSponsorship 
+                ? "https://images.unsplash.com/photo-152173711867-e3b97375f902?q=80&w=1200&auto=format&fit=crop" 
+                : "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop"} 
+              alt="Background" 
+              className="w-full h-full object-cover opacity-40 scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/20 to-transparent"></div>
           </div>
-          <button 
-            onClick={handleClose}
-            className="p-3 rounded-full hover:bg-black/5 transition-colors text-brand-black border border-black/5"
-          >
-            <X size={24} />
-          </button>
+
+          <div className="relative z-10">
+             <div className="w-12 h-1 bg-brand-yellow mb-8"></div>
+             <h2 className="text-white text-4xl font-serif italic mb-4">The ShiftUp <br /> Network</h2>
+             <p className="text-white/60 font-light tracking-wide max-w-xs">
+               Join a league of visionaries rewriting the narrative of African potential.
+             </p>
+          </div>
+
+          <div className="relative z-10">
+            <blockquote className="text-white/80 text-xl font-light mb-8 leading-relaxed italic">
+              "True leadership isn't about being in charge. It's about taking care of those in your charge."
+            </blockquote>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-brand-yellow/20 border border-brand-yellow/30 flex items-center justify-center">
+                <CheckCircle2 className="text-brand-yellow" size={20} />
+              </div>
+              <span className="text-white text-[10px] font-bold uppercase tracking-widest">Verified Opportunity</span>
+            </div>
+          </div>
+
+          {/* Floating Brand Glow */}
+          <div className="absolute top-1/4 -right-20 w-64 h-64 bg-brand-yellow/10 rounded-full blur-[100px]"></div>
         </div>
 
-        {/* Form Fields - with mt-5 (20px) margin top */}
-        <div className="p-8 md:p-12 space-y-8 bg-white overflow-y-auto custom-scrollbar flex-grow mt-5">
-           
-           {isSponsorship ? (
-             <>
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Organisation Name</label>
-                 <input 
-                   required
-                   type="text" 
-                   placeholder="Enter your company name" 
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none"
-                 />
-               </div>
+        {/* RIGHT SIDE: The Form Experience */}
+        <div className="flex-1 bg-white relative flex flex-col min-h-0 overflow-hidden">
+          {/* Header */}
+          <div className="p-8 md:p-12 flex justify-between items-start border-b border-gray-50 flex-shrink-0">
+            <div>
+              <span className="text-brand-gold font-bold text-[10px] tracking-[0.4em] uppercase mb-3 block">Application Gateway</span>
+              <h3 className="text-2xl md:text-4xl font-extrabold text-brand-black tracking-tight">
+                {isSponsorship ? 'Secure Partnership' : `${category} Registration`}
+              </h3>
+            </div>
+            <button 
+              onClick={handleClose}
+              className="p-3 md:p-4 rounded-full bg-gray-50 text-gray-400 hover:bg-brand-black hover:text-white transition-all duration-300"
+            >
+              <X size={24} />
+            </button>
+          </div>
 
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Work Email</label>
-                 <input 
-                   required
-                   type="email" 
-                   placeholder="partnerships@company.com" 
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none"
-                 />
-               </div>
-
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Category</label>
-                 <div className="relative">
-                    <select className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none cursor-pointer">
-                        <option value="" disabled selected>Select a category</option>
-                        <option value="financial">Financial Support</option>
-                        <option value="resource">Resource & Hardware</option>
+          {/* Form Scrollable Area */}
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-8 md:p-12">
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {isSponsorship ? (
+                <>
+                  <div className="form-field-anim col-span-2 group">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Organisation Name</label>
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="e.g. Google Africa" 
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium"
+                    />
+                  </div>
+                  <div className="form-field-anim col-span-2 group md:col-span-1">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Work Email</label>
+                    <input 
+                      required
+                      type="email" 
+                      placeholder="partnerships@company.com" 
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium"
+                    />
+                  </div>
+                  <div className="form-field-anim col-span-2 group md:col-span-1">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Interest Category</label>
+                    <div className="relative">
+                      <select className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium appearance-none cursor-pointer">
+                        <option value="">Choose Path...</option>
+                        <option value="financial">Financial Investment</option>
+                        <option value="internship">Internship Pipeline</option>
                         <option value="scholarship">Full Scholarships</option>
-                        <option value="internship">Internship Placement</option>
-                    </select>
-                    <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                 </div>
-               </div>
+                      </select>
+                      <ChevronDown size={20} className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none" />
+                    </div>
+                  </div>
+                  <div className="form-field-anim col-span-2 group">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Legacy Vision</label>
+                    <textarea 
+                      rows={3}
+                      placeholder="What impact do you wish to create?"
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium resize-none"
+                    ></textarea>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="form-field-anim col-span-2 group">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Full Legal Name</label>
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="Your full name" 
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium"
+                    />
+                  </div>
+                  <div className="form-field-anim col-span-2 group md:col-span-1">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Personal Email</label>
+                    <input 
+                      required
+                      type="email" 
+                      placeholder="name@example.com" 
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium"
+                    />
+                  </div>
+                  <div className="form-field-anim col-span-2 group md:col-span-1">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">LinkedIn Profile</label>
+                    <input 
+                      required
+                      type="url" 
+                      placeholder="linkedin.com/in/..." 
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium"
+                    />
+                  </div>
+                  <div className="form-field-anim col-span-2 group">
+                    <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 block group-focus-within:text-brand-gold transition-colors">Core Expertise</label>
+                    <textarea 
+                      required
+                      rows={3}
+                      placeholder="Briefly describe your professional journey..."
+                      className="w-full bg-gray-50 border-b-2 border-transparent px-0 py-4 focus:bg-transparent focus:border-brand-yellow transition-all outline-none text-lg text-brand-black font-medium resize-none"
+                    ></textarea>
+                  </div>
+                </>
+              )}
 
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Additional Notes</label>
-                 <textarea 
-                   rows={4}
-                   placeholder="Tell us about your interest..."
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all resize-none appearance-none"
-                 ></textarea>
-               </div>
-             </>
-           ) : (
-             <>
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Full Name</label>
-                 <input 
-                   required
-                   type="text" 
-                   placeholder="Your full legal name" 
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none"
-                 />
-               </div>
-
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Email Address</label>
-                 <input 
-                   required
-                   type="email" 
-                   placeholder="name@example.com" 
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none"
-                 />
-               </div>
-
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">LinkedIn URL</label>
-                 <input 
-                   required
-                   type="url" 
-                   placeholder="linkedin.com/in/username" 
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all appearance-none"
-                 />
-               </div>
-
-               <div className="space-y-3">
-                 <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em]">Expertise</label>
-                 <textarea 
-                   required
-                   rows={3}
-                   placeholder="e.g. Design, Coding, Management..."
-                   className="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50/50 text-brand-black focus:outline-none focus:border-brand-yellow focus:ring-4 focus:ring-brand-yellow/10 text-base transition-all resize-none appearance-none"
-                 ></textarea>
-               </div>
-             </>
-           )}
-
-           <div className="pt-8 pb-4">
-             <button className="w-full bg-brand-yellow hover:bg-brand-gold text-brand-black font-extrabold py-5 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-xl hover:-translate-y-1 active:scale-95 group uppercase tracking-[0.2em] text-xs">
-               SUBMIT INTEREST
-               <ArrowUpRight size={20} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-             </button>
-           </div>
-
+              {/* Action Button Container */}
+              <div className="form-field-anim col-span-2 pt-8 pb-12">
+                <button className="w-full bg-brand-black text-white hover:bg-brand-yellow hover:text-brand-black h-[72px] rounded-2xl flex items-center justify-center gap-4 transition-all duration-500 group shadow-2xl active:scale-95">
+                  <span className="text-xs font-extrabold uppercase tracking-[0.3em]">Ignite This Journey</span>
+                  <ArrowUpRight size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </button>
+                <p className="text-center text-gray-400 text-[10px] mt-6 font-medium">By submitting, you agree to our Code of Conduct and Privacy Terms.</p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

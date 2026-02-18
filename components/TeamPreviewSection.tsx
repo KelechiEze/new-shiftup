@@ -50,7 +50,7 @@ const TeamPreviewSection: React.FC<TeamPreviewSectionProps> = ({ onNavigate }) =
             <span className="text-sm font-bold tracking-[0.4em] uppercase text-brand-yellow">PEOPLE OF PURPOSE</span>
           </div>
           
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] mb-12 tracking-tighter">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white leading-[1.05] mb-12 tracking-tighter">
             Get To Know The <br /> Passionate Hearts <br /> Behind Our Work.
           </h2>
 

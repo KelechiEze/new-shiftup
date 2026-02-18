@@ -47,7 +47,7 @@ const EventsSection: React.FC = () => {
       {/* Decorative Plus */}
       <div className="absolute top-[10%] left-[30%] text-[#7C8D5E] opacity-50 hidden md:block">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-          <path d="M12 4V20M4 12H20" />
+          <path d="M12 4V20M4 12H18" />
         </svg>
       </div>
 
@@ -68,7 +68,7 @@ const EventsSection: React.FC = () => {
             <div className="w-10 h-[1px] bg-brand-yellow"></div>
             <span className="text-xs font-bold tracking-[0.2em] uppercase text-white/60">UPCOMING EVENTS</span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-2xl">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight max-w-2xl">
             Stay Up-To-Date With Our Latest Events And Community Initiatives.
           </h2>
         </div>

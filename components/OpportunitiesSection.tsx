@@ -1,3 +1,4 @@
+
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -45,7 +46,7 @@ const OpportunitiesSection: React.FC = () => {
               <div className="w-10 h-[1px] bg-brand-yellow"></div>
               <span className="text-xs font-bold tracking-[0.2em] uppercase text-gray-400">VOLUNTEER OPPORTUNITIES</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1A1A1A] leading-[1.1] tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#1A1A1A] leading-[1.1] tracking-tight">
               Explore Our Diverse Range Of Volunteer Opportunities.
             </h2>
           </div>
@@ -69,33 +70,16 @@ const OpportunitiesSection: React.FC = () => {
           {/* Right: Stacked Cards */}
           <div className="flex flex-col gap-6 lg:pl-12">
             <div className="opp-card bg-brand-yellow p-8 md:p-10 rounded-[2.5rem] text-brand-black shadow-xl transform hover:-translate-x-2 transition-transform duration-500">
-              <h3 className="text-2xl font-bold mb-4">Cause That Aligns Passion</h3>
-              <p className="text-brand-black/80 leading-relaxed">Join a movement where your specific talents are used to solve real-world problems.</p>
+              <h3 className="text-xl font-bold mb-4">Cause That Aligns Passion</h3>
+              <p className="opacity-80 text-sm leading-relaxed">Join initiatives that match your values and professional expertise.</p>
             </div>
-
-            <div className="opp-card bg-brand-gold p-10 md:p-12 rounded-[2.5rem] text-brand-black shadow-xl transform hover:-translate-x-4 transition-transform duration-500 scale-105 origin-right">
-              <h3 className="text-2xl font-bold mb-4">Build A Brighter Future For All</h3>
-              <p className="text-brand-black/80 leading-relaxed">Collaborate with experts and peers to design sustainable solutions for Africa's youth.</p>
-            </div>
-
-            <div className="opp-card bg-brand-yellow p-8 md:p-10 rounded-[2.5rem] text-brand-black shadow-xl transform hover:-translate-x-2 transition-transform duration-500">
-              <h3 className="text-2xl font-bold mb-4">Contribution Help Others</h3>
-              <p className="text-brand-black/80 leading-relaxed">Your contribution directly supports the growth of emerging leaders across the continent.</p>
+            <div className="opp-card bg-brand-black p-8 md:p-10 rounded-[2.5rem] text-white shadow-xl transform hover:-translate-x-2 transition-transform duration-500">
+              <h3 className="text-xl font-bold mb-4">Skills Development</h3>
+              <p className="opacity-60 text-sm leading-relaxed">Gain hands-on experience and build your portfolio through impactful work.</p>
             </div>
           </div>
         </div>
-
       </div>
-
-      {/* Decorative dots bottom right */}
-      <div className="absolute bottom-10 right-10 text-brand-gold opacity-30 hidden md:block">
-        <div className="grid grid-cols-5 gap-2">
-          {[...Array(25)].map((_, i) => (
-            <div key={i} className="w-1 h-1 rounded-full bg-current"></div>
-          ))}
-        </div>
-      </div>
-
     </section>
   );
 };

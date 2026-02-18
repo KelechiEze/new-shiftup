@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ChevronRight, ArrowUpRight } from 'lucide-react';
 import ProgrammeRegistrationModal from './ProgrammeRegistrationModal';
@@ -38,10 +39,10 @@ const programs = [
 ];
 
 const ProgrammeList: React.FC = () => {
-  const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<{ title: string; image: string } | null>(null);
 
-  const handleApply = (programTitle: string) => {
-    setSelectedProgram(programTitle);
+  const handleApply = (programTitle: string, programImage: string) => {
+    setSelectedProgram({ title: programTitle, image: programImage });
   };
 
   return (
@@ -49,7 +50,8 @@ const ProgrammeList: React.FC = () => {
       <ProgrammeRegistrationModal 
         isOpen={!!selectedProgram} 
         onClose={() => setSelectedProgram(null)} 
-        programTitle={selectedProgram || ''} 
+        programTitle={selectedProgram?.title || ''} 
+        programImage={selectedProgram?.image || ''}
       />
 
       <div className="max-w-7xl mx-auto flex flex-col gap-32">
@@ -83,7 +85,7 @@ const ProgrammeList: React.FC = () => {
                 <span className="text-[12px] font-extrabold tracking-[0.3em] uppercase text-brand-yellow">{prog.tag}</span>
               </div>
               
-              <h3 className="text-3xl md:text-5xl font-extrabold text-brand-black mb-4 tracking-tight leading-tight">
+              <h3 className="text-xl md:text-3xl font-extrabold text-brand-black mb-4 tracking-tight leading-tight">
                 {prog.title}
               </h3>
               
@@ -105,7 +107,7 @@ const ProgrammeList: React.FC = () => {
               </div>
 
               <button 
-                onClick={() => handleApply(prog.title)}
+                onClick={() => handleApply(prog.title, prog.image)}
                 className="group bg-brand-yellow hover:bg-brand-gold text-brand-black px-12 h-[64px] rounded-full font-bold tracking-widest text-xs flex items-center gap-3 transition-all shadow-xl hover:-translate-y-1 active:scale-95 uppercase"
               >
                 APPLY FOR THIS PROGRAMME <ArrowUpRight size={18} />

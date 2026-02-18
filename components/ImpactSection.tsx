@@ -1,3 +1,4 @@
+
 import React, { useLayoutEffect, useRef } from 'react';
 import { Play, Check, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
@@ -70,7 +71,7 @@ const ImpactSection: React.FC = () => {
             <span className="text-xs font-bold tracking-[0.2em] uppercase text-gray-400">IMPACT STORIES</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#1A1A1A] leading-[1.1] mb-8 tracking-tight">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#1A1A1A] leading-[1.1] mb-8 tracking-tight">
             Discover How We're Making A Difference And How You Can Get Involved.
           </h2>
 

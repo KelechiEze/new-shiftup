@@ -67,7 +67,7 @@ const WhyShiftUpAbout: React.FC = () => {
             </div>
 
             {/* Main Heading */}
-            <h2 className="about-left-anim text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-brand-black leading-[1.1] mb-12">
+            <h2 className="about-left-anim text-2xl md:text-3xl lg:text-[2.5rem] font-bold text-brand-black leading-[1.1] mb-12">
                 Africa’s greatest <br />
                 resource is her <br />
                 people.

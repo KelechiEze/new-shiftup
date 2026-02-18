@@ -44,7 +44,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigate }) => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
         <div className="cta-content max-w-4xl">
-          <h2 className="text-5xl md:text-7xl lg:text-9xl font-extrabold text-white leading-[1] mb-12 tracking-tighter">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white leading-[1] mb-12 tracking-tighter">
             Join Us & Be A Part Of <br className="hidden lg:block" /> Something Meaningful.
           </h2>
           <p className="text-white/70 text-lg md:text-2xl font-light leading-relaxed mb-16 max-w-2xl">

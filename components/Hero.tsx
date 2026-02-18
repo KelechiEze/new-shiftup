@@ -1,7 +1,65 @@
 
 import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
-import { ArrowRight, Play, X } from 'lucide-react';
+import { ArrowRight, Play, X, Star, Circle, Triangle, Plus, Square, Zap } from 'lucide-react';
 import gsap from 'gsap';
+
+const FloatingIcons: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const icons = [Star, Circle, Triangle, Plus, Square, Zap];
+  
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const elements = containerRef.current?.querySelectorAll('.floating-icon');
+      if (elements) {
+        elements.forEach((el) => {
+          // Random floating animation
+          gsap.to(el, {
+            x: '+=random(-40, 40)',
+            y: '+=random(-40, 40)',
+            rotation: '+=random(-90, 90)',
+            duration: 'random(3, 6)',
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: 'random(0, 2)',
+          });
+        });
+      }
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Generate 40 random icons
+  const scatteredIcons = Array.from({ length: 40 }).map((_, i) => {
+    const IconComponent = icons[Math.floor(Math.random() * icons.length)];
+    const size = Math.floor(Math.random() * 12) + 8; // 8px to 20px
+    const top = Math.random() * 100;
+    const left = Math.random() * 100;
+    const opacity = Math.random() * 0.4 + 0.1; // 0.1 to 0.5
+    const color = Math.random() > 0.5 ? '#FACC15' : '#FFFFFF'; // Yellow or White
+    
+    return (
+      <div
+        key={i}
+        className="floating-icon absolute pointer-events-none"
+        style={{
+          top: `${top}%`,
+          left: `${left}%`,
+          opacity,
+          color,
+        }}
+      >
+        <IconComponent size={size} strokeWidth={2} />
+      </div>
+    );
+  });
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 z-1 overflow-hidden pointer-events-none">
+      {scatteredIcons}
+    </div>
+  );
+};
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -124,11 +182,14 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
+      {/* Floating Space Icons Effect */}
+      <FloatingIcons />
+
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-20">
         
         {/* Left Side Content */}
         <div className="lg:col-span-8 flex flex-col items-start">
-          {/* Subtitle - Pushed downwards as requested */}
+          {/* Subtitle */}
           <div className="flex items-center gap-5 mb-8 mt-14 md:mt-20">
             <div className="hero-line w-20 h-[2px] bg-brand-yellow rounded-full"></div>
             <span className="hero-subtitle-anim text-[12px] md:text-[14px] font-extrabold tracking-[0.3em] text-white uppercase opacity-80">
@@ -137,7 +198,7 @@ const Hero: React.FC = () => {
           </div>
           
           <div className="overflow-hidden mb-8">
-            <h1 className="hero-title-anim text-4xl md:text-6xl lg:text-[5rem] font-extrabold text-white leading-[1.1] tracking-tight max-w-5xl">
+            <h1 className="hero-title-anim text-4xl md:text-6xl lg:text-[5.5rem] font-extrabold text-white leading-[1.05] tracking-tight max-w-5xl">
               Together We Can <br />
               <span className="text-brand-yellow italic font-serif">Create Positive Change</span> <br />
               In The World.
@@ -200,7 +261,7 @@ const Hero: React.FC = () => {
           }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-6 md:p-12 bg-black/90 backdrop-blur-2xl cursor-pointer"
         >
-          {/* Refined, Small Close Button - Positioned to avoid navbar overlap */}
+          {/* Refined, Small Close Button */}
           <button 
             onClick={closeVideo}
             className="absolute top-28 right-8 md:top-32 md:right-16 text-white/50 hover:text-white transition-all p-2 rounded-full hover:bg-white/10 z-[110] border border-white/10"

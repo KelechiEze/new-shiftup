@@ -57,7 +57,7 @@ const PartnerOpportunities: React.FC = () => {
             <span className="text-[12px] font-bold tracking-[0.3em] uppercase text-gray-400">PARTNERSHIP CATEGORIES</span>
             <div className="w-12 h-[1.5px] bg-brand-yellow"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-black tracking-tight leading-tight max-w-3xl">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-black tracking-tight leading-tight max-w-3xl">
             Ways You Can <br className="hidden md:block"/> Get Involved.
           </h2>
       </div>

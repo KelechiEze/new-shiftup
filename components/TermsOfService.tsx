@@ -1,272 +1,240 @@
 
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Gavel, Users, Info, Scale, HelpCircle, ArrowRight, Zap, Ban } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TermsOfService: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState('principles');
+
+  const navItems = [
+    { id: 'principles', title: 'Principles', icon: Zap },
+    { id: 'conduct', title: 'Conduct', icon: Users },
+    { id: 'rights', title: 'Rights', icon: Scale },
+    { id: 'legal', title: 'Legalities', icon: Gavel },
+  ];
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".terms-fade", {
-        y: 20,
+      gsap.from(".terms-hero", {
+        y: 80,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.05,
-        ease: "power2.out"
+        duration: 1.5,
+        ease: "power4.out"
       });
 
-      // Animate decorative blocks
-      gsap.from(".bg-block-terms", {
-        scale: 0,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.05,
-        ease: "back.out(1.7)"
+      const termSections = gsap.utils.toArray('.terms-section');
+      termSections.forEach((section: any) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          },
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "expo.out"
+        });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 40%",
+          end: "bottom 40%",
+          onEnter: () => setActiveTab(section.id),
+          onEnterBack: () => setActiveTab(section.id),
+        });
       });
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
+  const jumpTo = (id: string) => {
+    const target = document.getElementById(id);
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 100,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
-    <div ref={containerRef} className="relative w-full bg-cream min-h-screen pt-12 pb-24 px-6 md:px-12 overflow-hidden">
+    <div ref={containerRef} className="relative w-full bg-brand-black min-h-screen pt-24 pb-32 overflow-hidden">
       
-      {/* Decorative Blocks - Top Left */}
-      <div className="absolute top-0 left-0 z-0 flex flex-col pointer-events-none">
-        <div className="flex">
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FEF9C3] bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FDE047] bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FACC15] bg-block-terms"></div>
-        </div>
-        <div className="flex">
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-transparent"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FEF9C3] opacity-60 bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-transparent"></div>
-        </div>
-      </div>
-
-      {/* Main Content Container */}
-      <div className="max-w-4xl mx-auto relative z-10 pt-16 md:pt-24">
+      {/* Immersive Dark Hero */}
+      <header className="terms-hero max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-32 mb-24 md:mb-40 relative z-10">
+        <div className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[200px] pointer-events-none"></div>
         
-        {/* Breadcrumb */}
-        <div className="terms-fade mb-4">
-          <span className="text-sm font-medium text-brand-black border-b-2 border-brand-yellow pb-0.5">
-            Privacy Policy
-          </span>
+        <div className="flex flex-col gap-8">
+           <div className="flex items-center gap-6">
+              <div className="w-16 h-px bg-brand-yellow"></div>
+              <span className="text-xs font-black tracking-[0.5em] text-brand-yellow uppercase">The Social Contract</span>
+           </div>
+           <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-[0.85]">
+             Terms <br /> & <span className="font-serif italic text-brand-yellow">Culture.</span>
+           </h1>
+           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mt-12">
+              <p className="text-white/40 text-xl font-light max-w-xl leading-relaxed">
+                By entering the ShiftUp ecosystem, you agree to a standard of excellence, integrity, and mutual growth.
+              </p>
+              <div className="flex items-center gap-4 bg-white/5 p-6 rounded-[2.5rem] border border-white/10">
+                 <div className="w-12 h-12 rounded-full bg-brand-yellow flex items-center justify-center text-brand-black">
+                    <Info size={24} />
+                 </div>
+                 <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/50">Effective Cycle</p>
+                    <p className="text-sm font-bold text-white">2025-2026 Batch</p>
+                 </div>
+              </div>
+           </div>
         </div>
+      </header>
 
-        {/* Title */}
-        <h1 className="terms-fade text-3xl md:text-5xl lg:text-6xl font-bold text-brand-black mb-6 tracking-tight">
-          Privacy Policy
-        </h1>
+      {/* Modern Split Layout */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 relative">
         
-        <div className="terms-fade space-y-6 text-gray-700 leading-relaxed font-light mb-12">
-          <p className="font-medium text-brand-black">
-            Alright—here’s a clean, solid, no-fluff Combined Terms of Service + Code of Conduct tailored specifically for ShiftUp Africa.
-          </p>
-          <p>
-            This is written to protect the platform, set culture early, and scale with you.
-          </p>
-          <p className="font-bold text-brand-black">
-            Terms of Service & Code of Conduct
-          </p>
-          <p>
-            Effective Date: 22|12|2025
-          </p>
-          <p>
-            Welcome to ShiftUp Africa (“ShiftUp Africa,” “we,” “our,” or “us”).
-          </p>
-          <p>
-            By accessing or using our website, programs, platforms, communities, or services (collectively, the “Services”), you agree to comply with and be bound by these Terms of Service & Code of Conduct (“Terms”).
-          </p>
-          <p>
-            If you do not agree, please do not use our Services.
-          </p>
-        </div>
+        {/* Navigation Rail */}
+        <aside className="hidden lg:block lg:col-span-1">
+          <div className="sticky top-40 flex flex-col items-center gap-12">
+             {navItems.map((item) => (
+               <button 
+                 key={item.id}
+                 onClick={() => jumpTo(item.id)}
+                 className={`group relative flex flex-col items-center transition-all duration-500 ${
+                   activeTab === item.id ? 'scale-125' : 'opacity-30 hover:opacity-100'
+                 }`}
+                 title={item.title}
+               >
+                 <item.icon size={28} className={activeTab === item.id ? 'text-brand-yellow' : 'text-white'} />
+                 <div className={`absolute -right-24 bg-brand-yellow text-brand-black px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap`}>
+                    {item.title}
+                 </div>
+                 {activeTab === item.id && <div className="absolute -bottom-4 w-1 h-1 bg-brand-yellow rounded-full"></div>}
+               </button>
+             ))}
+          </div>
+        </aside>
 
-        {/* Detailed Sections */}
-        <div className="terms-fade space-y-10 text-gray-700 leading-relaxed font-light">
+        {/* Content Body */}
+        <div className="lg:col-span-8 space-y-48">
           
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">1. Our Mission (Read This First)</h2>
-            <p>ShiftUp Africa exists to empower young Africans with the mindset, tools, and access needed to succeed in their careers and personal lives.</p>
-            <p className="mt-4">Everything we build—content, programs, communities—exists to help people grow responsibly, ethically, and sustainably.</p>
-            <p className="mt-2">These Terms exist to protect that mission.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">2. Eligibility</h2>
-            <p className="mb-2">By using ShiftUp Africa, you confirm that:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>You are at least 13 years old</li>
-              <li>You can legally agree to these Terms</li>
-              <li>You will use the platform for lawful, constructive purposes</li>
-            </ul>
-            <p className="mt-4">We reserve the right to deny or terminate access if eligibility requirements are violated.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">3. Use of the Platform</h2>
-            <p className="mb-2">You agree to:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>Use ShiftUp Africa only for its intended purpose</li>
-              <li>Provide accurate and truthful information</li>
-              <li>Respect other users, mentors, facilitators, and staff</li>
-              <li>Comply with all applicable laws and regulations</li>
-            </ul>
-            <p className="mt-6 mb-2">You agree not to:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>Misuse the platform or attempt to disrupt its operation</li>
-              <li>Access restricted areas without authorization</li>
-              <li>Use ShiftUp Africa to exploit, deceive, or harm others</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">4. User Accounts & Responsibilities</h2>
-            <p className="mb-2">If you create an account or register for a program:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>You are responsible for maintaining the confidentiality of your login details</li>
-              <li>You are responsible for all activity under your account</li>
-              <li>You must notify us immediately of any unauthorized use</li>
-            </ul>
-            <p className="mt-4">We are not liable for losses caused by compromised accounts due to user negligence.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">5. Code of Conduct (Community Rules)</h2>
-            <p className="mb-4">This section is non-negotiable.</p>
-            
-            <div className="mb-6">
-              <h3 className="font-bold text-brand-black mb-2">a. Respect & Integrity</h3>
-              <p className="mb-1">All users must:</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>Treat others with dignity and respect</li>
-                <li>Engage in constructive, professional communication</li>
-                <li>Disagree without being disrespectful</li>
-              </ul>
-            </div>
-
-            <div className="mb-6">
-              <h3 className="font-bold text-brand-black mb-2">b. Zero Tolerance Behavior</h3>
-              <p className="mb-1">The following are strictly prohibited:</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>Harassment, bullying, intimidation, or threats</li>
-                <li>Hate speech, discrimination, or exclusion based on race, gender, religion, nationality, disability, or background</li>
-                <li>Sexual misconduct, inappropriate messages, or exploitation</li>
-                <li>Spamming, solicitation, or self-promotion without permission</li>
-                <li>Impersonation or misrepresentation of identity</li>
-                <li>Sharing false, misleading, or harmful information</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-brand-black mb-2">c. Community Spaces</h3>
-              <p className="mb-1">This Code applies across:</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>Website interactions</li>
-                <li>Programs, cohorts, and classes</li>
-                <li>Online communities (WhatsApp, Slack, Discord, etc.)</li>
-                <li>Events, workshops, and meetups (online or offline)</li>
-              </ul>
-              <p className="mt-4">If you’re in a ShiftUp Africa space, these rules apply. Period.</p>
+          <section id="principles" className="terms-section">
+            <div className="space-y-12">
+              <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter">01. Principles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="p-10 bg-white/5 rounded-[3rem] border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-brand-yellow text-sm font-black uppercase tracking-[0.3em] mb-6">Mission First</h3>
+                  <p className="text-white/60 font-light leading-relaxed">
+                    ShiftUp Africa exists for the ambitious. Everything we build is designed to help you scale your potential. We protect our community from mediocrity.
+                  </p>
+                </div>
+                <div className="p-10 bg-white/5 rounded-[3rem] border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-brand-yellow text-sm font-black uppercase tracking-[0.3em] mb-6">Meritocracy</h3>
+                  <p className="text-white/60 font-light leading-relaxed">
+                    Access to our cohorts and partners is merit-based. We do not guarantee jobs; we guarantee transformation for those who put in the work.
+                  </p>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">6. Content & Intellectual Property</h2>
-            <div className="mb-6">
-              <h3 className="font-bold text-brand-black mb-2">a. Our Content</h3>
-              <p className="mb-4">All content provided by ShiftUp Africa—including text, videos, training materials, branding, and resources—is owned by ShiftUp Africa or licensed to us.</p>
-              <p className="font-medium mb-1">You may:</p>
-              <ul className="list-disc ml-6 space-y-1 mb-4">
-                <li>Use content for personal, non-commercial learning</li>
-              </ul>
-              <p className="font-medium mb-1">You may not:</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>Reproduce, resell, or distribute our content without written permission</li>
-              </ul>
+          <section id="conduct" className="terms-section">
+             <div className="p-12 md:p-20 bg-brand-yellow rounded-[4rem] text-brand-black">
+                <div className="flex items-center gap-6 mb-12">
+                   <Ban size={40} />
+                   <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-none">Code of <br /> Conduct.</h2>
+                </div>
+                <div className="space-y-10">
+                   <div className="flex gap-8 border-b border-brand-black/10 pb-10">
+                      <span className="text-2xl font-black">A.</span>
+                      <div>
+                        <h4 className="text-xl font-extrabold mb-2 uppercase">Zero Tolerance Policy</h4>
+                        <p className="font-medium opacity-70 leading-relaxed">Harassment, hate speech, or exploitation of any community member results in immediate, permanent termination with no right of appeal.</p>
+                      </div>
+                   </div>
+                   <div className="flex gap-8 border-b border-brand-black/10 pb-10">
+                      <span className="text-2xl font-black">B.</span>
+                      <div>
+                        <h4 className="text-xl font-extrabold mb-2 uppercase">Professional Integrity</h4>
+                        <p className="font-medium opacity-70 leading-relaxed">Plagiarism in sprints or misrepresentation of your credentials during program cycles will lead to immediate expulsion.</p>
+                      </div>
+                   </div>
+                   <div className="flex gap-8">
+                      <span className="text-2xl font-black">C.</span>
+                      <div>
+                        <h4 className="text-xl font-extrabold mb-2 uppercase">Confidentiality</h4>
+                        <p className="font-medium opacity-70 leading-relaxed">Internal training materials, proprietary frameworks, and partner insights are strictly for ShiftUp participants only.</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </section>
+
+          <section id="rights" className="terms-section">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter mb-12">02. IP & Usage</h2>
+            <div className="prose prose-invert prose-xl text-white/50 font-light leading-relaxed max-w-none">
+              <p className="text-white text-2xl font-medium leading-snug mb-10">
+                You own your work. We own our platforms.
+              </p>
+              <p>
+                All content provided by ShiftUp Africa—videos, guides, datasets, and branding—remains our exclusive property. You are granted a limited, non-transferable license to use these materials for your personal development during your active program cycle.
+              </p>
+              <div className="bg-white/5 p-12 rounded-[3rem] border border-white/10 mt-16">
+                 <h4 className="text-white text-lg font-bold mb-4 uppercase tracking-widest">Digital Footprint</h4>
+                 <p className="text-sm">By participating in our sessions, you grant us the right to record and use snippets of your participation for educational and promotional storytelling, ensuring your journey inspires others.</p>
+              </div>
             </div>
-
-            <div>
-              <h3 className="font-bold text-brand-black mb-2">b. User-Submitted Content</h3>
-              <p className="mb-2">If you submit content (comments, feedback, posts):</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>You retain ownership</li>
-                <li>You grant ShiftUp Africa a non-exclusive, royalty-free license to use it for platform-related purposes</li>
-              </ul>
-            </div>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">7. Enforcement & Consequences</h2>
-            <p className="mb-2">We reserve the right to take action if these Terms are violated, including:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>Warnings</li>
-              <li>Content removal</li>
-              <li>Temporary suspension</li>
-              <li>Permanent account termination</li>
-              <li>Removal from programs or communities without refund (where applicable)</li>
-            </ul>
-            <p className="mt-4">We don’t enjoy enforcing rules—but we will, to protect the community.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">8. Program Participation Disclaimer</h2>
-            <p>ShiftUp Africa provides educational, career development, and personal growth resources.</p>
-            <p className="mt-4 font-bold text-brand-black">We do not guarantee:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>Employment</li>
-              <li>Income</li>
-              <li>Business success</li>
-              <li>Specific outcomes</li>
-            </ul>
-            <p className="mt-4 italic">Results depend on individual effort, consistency, and external factors.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">9. Limitation of Liability</h2>
-            <p>To the fullest extent permitted by law:</p>
-            <ul className="list-disc ml-6 space-y-2 mt-2">
-              <li>ShiftUp Africa is not liable for indirect, incidental, or consequential damages.</li>
-              <li>Use of the platform is at your own risk.</li>
-            </ul>
-            <p className="mt-4 font-medium">We provide value, guidance, and opportunity—not magic.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">10. Termination of Access</h2>
-            <p className="mb-2">We may suspend or terminate your access:</p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>For violations of these Terms</li>
-              <li>For behavior that harms the community or brand</li>
-              <li>At our discretion, with or without prior notice</li>
-            </ul>
-            <p className="mt-4">You may stop using our Services at any time.</p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-brand-black mb-4">11. Governing Law</h2>
-            <p>
-              These Terms shall be governed by and interpreted in accordance with the laws of the Federal Republic of Nigeria, without regard to conflict of law principles.
-            </p>
+          <section id="legal" className="terms-section pt-20">
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
+                <div>
+                   <h2 className="text-4xl font-black text-white mb-8">Governing <br /> Jurisdiction</h2>
+                   <p className="text-white/40 text-lg font-light leading-relaxed">
+                     These terms are governed by the laws of the Federal Republic of Nigeria. Any disputes shall be settled through mandatory arbitration in Lagos before legal proceedings are initiated.
+                   </p>
+                </div>
+                <div className="flex flex-col gap-6">
+                   <button className="w-full bg-brand-yellow text-brand-black h-[72px] rounded-full font-black uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-2xl">
+                     DOWNLOAD PDF TERMS <ArrowRight size={20} />
+                   </button>
+                   <button className="w-full bg-white/10 text-white h-[72px] rounded-full font-black uppercase tracking-widest text-xs flex items-center justify-center gap-4 hover:bg-white/20 transition-all">
+                     CONTACT LEGAL <HelpCircle size={20} />
+                   </button>
+                </div>
+             </div>
           </section>
 
         </div>
+
+        {/* Floating Sidebar Decoration */}
+        <aside className="hidden xl:block xl:col-span-3">
+           <div className="sticky top-40 bg-white p-12 rounded-[3rem] shadow-2xl">
+              <p className="text-[10px] font-black tracking-[0.3em] text-brand-black/40 uppercase mb-6">Need Clarity?</p>
+              <h4 className="text-2xl font-black text-brand-black mb-6 leading-tight">Professional <br /> Standards.</h4>
+              <p className="text-gray-500 text-sm font-light leading-relaxed mb-10">
+                If you find any clause ambiguous, our compliance team is ready to assist your understanding.
+              </p>
+              <div className="h-px bg-gray-100 mb-10"></div>
+              <div className="space-y-4">
+                 <div className="flex items-center gap-3 text-brand-black font-bold text-xs uppercase tracking-widest">
+                    <Zap size={16} className="text-brand-yellow" /> Fast Response
+                 </div>
+                 <div className="flex items-center gap-3 text-brand-black font-bold text-xs uppercase tracking-widest">
+                    <Scale size={16} className="text-brand-yellow" /> Fair Play
+                 </div>
+              </div>
+           </div>
+        </aside>
+
       </div>
 
-      {/* Decorative Blocks - Bottom Left */}
-      <div className="absolute bottom-0 left-0 z-0 flex flex-col pointer-events-none mb-12">
-        <div className="flex">
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FACC15] bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FDE047] bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FEF9C3] bg-block-terms"></div>
-        </div>
-        <div className="flex">
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-transparent"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-[#FDE047] opacity-60 bg-block-terms"></div>
-          <div className="w-10 h-10 md:w-16 md:h-16 bg-transparent"></div>
-        </div>
-      </div>
+      {/* Footer Branded Glow */}
+      <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] bg-brand-yellow/5 rounded-full blur-[200px] pointer-events-none"></div>
 
     </div>
   );

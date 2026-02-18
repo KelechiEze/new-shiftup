@@ -104,7 +104,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
     <section ref={containerRef} className="bg-[#F9F9F9] py-20 px-6 md:px-12 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-start mb-12">
-          <h2 className="text-3xl md:text-5xl font-medium text-brand-black mb-4 tracking-tight">
+          <h2 className="text-xl md:text-3xl font-medium text-brand-black mb-4 tracking-tight">
             Latest from our blog
           </h2>
           <p className="text-gray-500 text-sm md:text-base max-w-2xl font-light">
@@ -150,7 +150,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate }) => {
                   {post.excerpt}
                 </p>
 
-                {/* Read More Link */}
+                {/* Read More Link Read Story Link */}
                 <div 
                   onClick={() => onNavigate?.('blog', undefined, post.id)}
                   className="flex items-center text-xs font-bold text-brand-black group-hover:translate-x-1 transition-transform duration-200 cursor-pointer mt-auto"

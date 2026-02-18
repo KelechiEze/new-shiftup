@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const ProgrammeHero: React.FC = () => {
@@ -23,7 +24,7 @@ const ProgrammeHero: React.FC = () => {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-extrabold text-white leading-[1.05] tracking-tight mb-8">
+          <h1 className="text-3xl md:text-5xl lg:text-[4rem] font-extrabold text-white leading-[1.05] tracking-tight mb-8">
             Master Your <br />
             <span className="text-brand-yellow italic font-serif">Future Journey.</span>
           </h1>
